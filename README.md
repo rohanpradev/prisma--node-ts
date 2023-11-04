@@ -1,6 +1,6 @@
 <div align='center'>
 
-<img src="https://www.datocms-assets.com/58377/1688031395-logo_on_light.svg" alt="logo" width= height= />
+<img src="https://prismalens.vercel.app/header/logo-dark.svg" alt="logo" />
 
 <h1>Prisma with nodejs and Typescript</h1>
 <p>This project uses prisma and postgres</p>
