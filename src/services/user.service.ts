@@ -8,6 +8,21 @@ const getPaginatedUsers = (pageNumber = 1, pageSize = 10) =>
     take: pageSize,
   });
 
+const getAutocompleteUsers = (searchTerm: string, limit = 5) =>
+  prisma.user.findMany({
+    where: {
+      name: {
+        contains: searchTerm,
+        mode: 'insensitive',
+      },
+    },
+    take: limit,
+    select: {
+      name: true,
+      email: true,
+    },
+  });
+
 const getUserById = (id: number) => prisma.user.findFirst({ where: { id } });
 
 const getUsersByIds = (idList: number[]) =>
@@ -42,6 +57,7 @@ const getUsersWithNonePostUnPublished = () =>
 
 export default {
   getAllUsers,
+  getAutocompleteUsers,
   getPaginatedUsers,
   getUserById,
   getUsersByIds,

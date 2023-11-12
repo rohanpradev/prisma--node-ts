@@ -16,4 +16,14 @@ const findPaginatedUsers = async (req: Request, res: Response) => {
   return res.status(200).json(userPaginatedList);
 };
 
-export default { findAllUsers, findPaginatedUsers };
+const findAutocompleteUsers = async (req: Request, res: Response) => {
+  const limit = parseInt((req?.query?.limit as string) || '10');
+  const searchTerm = req?.query?.searchTerm as string;
+  const autocompleteList = await userService.getAutocompleteUsers(
+    searchTerm,
+    limit
+  );
+  return res.status(200).json(autocompleteList);
+};
+
+export default { findAllUsers, findPaginatedUsers,findAutocompleteUsers };
