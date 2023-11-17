@@ -1,57 +1,43 @@
 import prisma from '../db/prisma';
 
-const getAllUsers = () => prisma.user.findMany();
+const getAllUsers = () => prisma.users.findMany();
 
 const getPaginatedUsers = (pageNumber = 1, pageSize = 10) =>
-  prisma.user.findMany({
+  prisma.users.findMany({
     skip: (pageNumber - 1) * pageSize,
     take: pageSize,
   });
 
 const getAutocompleteUsers = (searchTerm: string, limit = 5) =>
-  prisma.user.findMany({
+  prisma.users.findMany({
     where: {
-      name: {
+      username: {
         contains: searchTerm,
         mode: 'insensitive',
       },
     },
     take: limit,
     select: {
-      name: true,
+      username: true,
       email: true,
     },
   });
 
-const getUserById = (id: number) => prisma.user.findFirst({ where: { id } });
+const getUserById = (id: number) => prisma.users.findFirst({ where: { id } });
 
 const getUsersByIds = (idList: number[]) =>
-  prisma.user.findFirst({ where: { id: { in: idList } } });
+  prisma.users.findMany({ where: { id: { in: idList } } });
 
 const getUserByEmail = (email: string) =>
-  prisma.user.findFirstOrThrow({ where: { email } });
+  prisma.users.findFirstOrThrow({ where: { email } });
 
 const getUsersByName = (name: string) =>
-  prisma.user.findMany({
+  prisma.users.findMany({
     where: {
-      name: {
+      username: {
         equals: name,
         mode: 'insensitive',
       },
-    },
-  });
-
-const getUsersWithAllPostPublished = () =>
-  prisma.user.findMany({
-    where: {
-      posts: { every: { published: true } },
-    },
-  });
-
-const getUsersWithNonePostUnPublished = () =>
-  prisma.user.findMany({
-    where: {
-      posts: { none: { published: false } },
     },
   });
 
